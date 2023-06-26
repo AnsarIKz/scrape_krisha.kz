@@ -2,6 +2,7 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 import time
+import re
 
 
 def scrape_krisha():
@@ -39,8 +40,7 @@ def scrape_krisha():
             print(room_count, area)
 
             price_elem = ad.find('div', class_='a-card__price')
-            price = price_elem.text.replace('\xa0', '').split(' ')[
-                0] if price_elem else 'N/A'
+            price = re.sub(r'\D', '', price_elem.text) if price_elem else 'N/A'
 
             subtitle_elem = ad.find('div', class_='a-card__subtitle')
             if subtitle_elem:
@@ -67,9 +67,9 @@ def scrape_krisha():
         page += 1
 
         # Добавляем задержку в 1 секунду между запросами
-        time.sleep(0.3)
+        time.sleep(0.2)
 
-    with open('krisha_data.csv', 'w', newline='', encoding='utf-8') as file:
+    with open('krisha_data.csv', 'w', newline='', encoding='utf-8-sig') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys())
         writer.writeheader()
         writer.writerows(data)
