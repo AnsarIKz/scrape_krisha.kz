@@ -67,7 +67,7 @@ def scrape_krisha():
         page += 1
 
         # Добавляем задержку в 1 секунду между запросами
-        time.sleep(1)
+        time.sleep(0.3)
 
     with open('krisha_data.csv', 'w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys())
